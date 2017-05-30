@@ -74,9 +74,8 @@ public class ClientConnectionManager extends Thread {
 			switch (cmd.getNumCommand()) {
 			case Constants.CMD_STORE_FILE:
 				try {
-					// Write received file
 					writeReceivedFile(((StoreFileCommand) cmd).getFilePath(),Base64.decode(((StoreFileCommand) cmd).getFile()));
-					// Insert received metaData
+					
 					insertReceivedMetaData(cmd);
 
 					//Send status
@@ -109,7 +108,7 @@ public class ClientConnectionManager extends Thread {
 			 case Constants.CMD_SEND_FILE_TCELL:
 				 byte[] receivedFile = Base64.decode(((SendFileTcellCommand) cmd).getFileToSend().getFile());					
 				 String fileID = null;
-				//We delete the userID information if it is coming from a recover command
+				
 					String temp = ((SendFileTcellCommand) cmd).getFileToSend().getFileDesc().fileID;
 					
 					String filePath = new File(temp).getParent();
@@ -124,7 +123,7 @@ public class ClientConnectionManager extends Thread {
 					System.out.println(fileID);
 
 					writeReceivedFile(fileID, receivedFile);
-					// Insert received metaData
+					// 
 					insertReceivedMetaData((((SendFileTcellCommand) cmd)).getFileToSend().getFileDesc());
 	 
 					//Send status
@@ -133,20 +132,15 @@ public class ClientConnectionManager extends Thread {
 				 break;
 				 
 			 case Constants.CMD_SHARE_FILE:
-				// Write received file
+				
 				byte[] receivedFileS = Base64.decode(((ShareFileCommand) cmd).getFileToShare().getFile());
 				writeReceivedFile(((ShareFileCommand) cmd).getFileToShare().getFileDesc().fileID, receivedFileS);
-				// Insert received metaData
+				
 				insertReceivedMetaData((((ShareFileCommand) cmd)).getFileToShare().getFileDesc());
  
 				//Send status
 				ioStreams.getOutputStream().writeInt(Constants.OK);
 				
-				//save the shared file in the RS
-				int test = 1;
-				if(test == 0)
-					System.out.println("share RS");
-				else if(test == 1){
 					String file = ((ShareFileCommand) cmd).getFileToShare().getFile();
 					String EncryptedFileName = new File(((ShareFileCommand) cmd).getFileToShare().getFileDesc().fileID).getName();
 					User user = TcellDAOToken.getInstance(false).getUserById(userGID);
@@ -154,13 +148,12 @@ public class ClientConnectionManager extends Thread {
 					String iv = ((ShareFileCommand) cmd).getFileToShare().getFileDesc().iv;
 					String strDecryptSkeyS = ((ShareFileCommand) cmd).getFileToShare().getFileDesc().sKey;
 					
-					// Encryption of the skey/iv
 					PublicKey pubKey = Tools.stringToPublicKey(user.getPubKey());
 					byte[] encrSkeyS= AsymmetricEncryption.encryptBlockByBlock( Base64.decode(strDecryptSkeyS), pubKey);
 					byte[] encrIvS= AsymmetricEncryption.encryptBlockByBlock( Base64.decode(iv), pubKey);
 										
 					ServerSaveFile.serverSaveFile(file, EncryptedFileName, Base64.encode(encrSkeyS), Base64.encode(encrIvS),user, "SHARE");
-				}
+			
 				TcellDAOToken.getInstance(false).printAllFiles();
 			 break;
 				
