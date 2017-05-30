@@ -1,6 +1,6 @@
 /*
  * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * and open the template in the editor
  */
 package daemon;
 
@@ -302,9 +302,7 @@ public class ClientConnectionManager extends Thread {
 			String strDecryptSkey= Base64.encode(decSKey);
 			String fileGID = userGID + "|" + filePath;
 			String fileID = Configuration.getConfiguration().getProperty("tcellPath")+ Tools.getFileName(fileGID);
-			//chemin absolut
-			//fileID = new File(fileID).getAbsolutePath();
-
+			
 			TcellDAOToken.getInstance(false).insertFileDesc(fileGID, fileID,strDecryptSkey, iv, type, "my file");
 		} catch (Exception e) {
 			e.printStackTrace();
