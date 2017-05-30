@@ -1,0 +1,6 @@
+Initializing DBMS... 
+Done. 
+Connecting to DB: dbHost
+Done
+Desinstall the MetaData of the DBMS embedded in the card
+Closing DB connection... Done.

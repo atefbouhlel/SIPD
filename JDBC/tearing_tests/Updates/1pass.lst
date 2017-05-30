@@ -1,0 +1,18 @@
+## Update tests
+#
+# Note:
+# 	NorCommUncomm never occurs: a case where the update log NOR
+# 	buffer contains both committed and uncommitted tuples never
+# 	occur since an update tuple occupies a full NOR Buffer.
+
+NorEmpty
+NorAllUncomm
+NorLastBeforeFlush
+NorLastAfterFlush
+
+NandSrAllUncomm
+NandPgEmpty
+
+NandBkEmptyBeforeLkUpd
+NandBkEmptyAfterLkUpd
+NandBkNonEmpty

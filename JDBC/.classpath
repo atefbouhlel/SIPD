@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="**/*.txt|**/.svn" kind="src" path="src/jdbc-j2se"/>
+	<classpathentry excluding="**/*.txt|**/.svn" kind="src" path="src/jdbc-core"/>
+	<classpathentry excluding="**/*.txt|**/.svn" kind="src" path="src/jdbc-tcp"/>
+	<classpathentry excluding="**/*.txt|**/.svn|test/runner/ServletRunner.java|org/inria/dmsp/test/TEST_EP_UI/" kind="src" path="src/jdbc-tests"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="class_include/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="class_include/commons-logging-1.1.3.jar"/>
+	<classpathentry kind="lib" path="class_include/httpclient-4.3.6.jar"/>
+	<classpathentry kind="lib" path="class_include/httpcore-4.3.3.jar"/>
+	<classpathentry kind="lib" path="class_include/json-simple-1.1.1.jar"/>
+	<classpathentry kind="output" path="classes"/>
+</classpath>

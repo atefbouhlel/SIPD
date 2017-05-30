@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee">
+
+  <display-name>JDBC Test Application</display-name>
+
+  <!-- Test Runner Servlet -->
+  <servlet>
+    <servlet-name>Test Runner Servlet</servlet-name>
+    <servlet-class>test.runner.ServletRunner</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Test Runner Servlet</servlet-name>
+    <url-pattern>/runner</url-pattern>
+  </servlet-mapping>
+  <!-- -->
+
+</web-app>

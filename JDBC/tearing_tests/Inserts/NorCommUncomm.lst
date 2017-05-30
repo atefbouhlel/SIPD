@@ -1,0 +1,11 @@
+# This file contains the of list of IDs of the tearing points that occur during the recovery.
+ 
+# Note: 
+#	No test of recover_nand_block_links because we cannot have both 
+#   committed and uncommitted tuples in the NOR buffer and have 
+#	allocated several blocks by the uncommitted transaction.
+
+# Recover_TableSKT: 
+91  
+93  
+94 

@@ -1,0 +1,190 @@
+# common variables
+TMPOUTPUTS=tmp
+GREP=grep --color=never
+U2D=tr -d "\\r"
+
+TESTS := $(shell find src/jdbc-tests/ -name "Test.java" | sed -e "s+src/jdbc-tests/\(.*\)\.java+\1+g" | sed s+/+.+g )
+# delete the test ouput after test ?
+DELETE?=no
+# stop immediately when one test fails
+STOPONERROR?=no
+ifeq ($(STOPONERROR),yes)
+CHECK_RET_CMD=	if [ -s $(TMPOUTPUTS)/$$t.Test$(PARTSUFFIX).diff ] ; then break ; fi
+else
+CHECK_RET_CMD:= true
+endif
+# default dbms host
+DBMSHOST?=localhost
+# dbms port to connect to
+DBMSPORT?=33000
+
+# Gemalto settings
+XSHOST=xs.pc
+# all tests should have been previously deployed:
+#HTTPRUNNER := curl --proxy "" 'http://$(XSHOST)/jdbc/runner?test=$(TEST)&dbmshost=$(DBMSHOST)' --silent --show-error -o $(TMPOUTPUTS)/$(TEST).out
+IGNORED_TESTS := $(foreach t, $(TESTS), $(shell if [ "z$t" != "z$(TEST)" ] ; then echo $t | sed -e "s+\(.*\)\.Test+\1/**+g" | sed -e "s+\.+/+g" ; fi))
+# deploy this test, run it, and undeploy it
+ANTTARGET=test
+ifeq (z$(PART),z)
+  HTTPRUNNER := ant -Dxs.host="$(XSHOST)" $(ANTTARGET) \
+	-Dtest.src="http://$(XSHOST)/jdbc/runner?test=$(TEST)&dbmshost=$(DBMSHOST)" \
+	-Dtest.dest=$(TMPOUTPUTS)/$(TEST).out \
+	-Dtest.ignore="$(IGNORED_TESTS)" > $(TMPOUTPUTS)/ant-$(TEST).out
+  PARTSUFFIX :=
+else
+  HTTPRUNNER := ant -Dxs.host="$(XSHOST)" $(ANTTARGET) \
+	-Dtest.src="http://$(XSHOST)/jdbc/runner?test=$(TEST)&dbmshost=$(DBMSHOST)&part=$(PART)" \
+	-Dtest.part=$(PART) \
+	-Dtest.dest=$(TMPOUTPUTS)/$(TEST)-$(PART).out \
+	-Dtest.ignore="$(IGNORED_TESTS)" > $(TMPOUTPUTS)/ant-$(TEST)-$(PART).out
+  PARTSUFFIX :=-$(PART)
+endif
+
+# INRIA settings
+MAINRUNNER := java -Djdbc.debug=false -Djdbc.port=$(DBMSPORT) -cp classes test.runner.MainRunner $(TEST) $(DBMSHOST) > $(TMPOUTPUTS)/$(TEST).out
+
+# default runner
+RUNNER=main
+# select test runner command
+ifeq ($(RUNNER),http)
+  RUNTEST := $(HTTPRUNNER)
+else
+ifeq ($(RUNNER),main)
+  RUNTEST := $(MAINRUNNER)
+else
+  $(error Unknwown test runner: $(RUNNER))
+endif
+endif
+
+help:
+	@echo "Usage:"
+	@echo "  make ( all | test TEST=<test name> ) [RUNNER=(http|main)] [XSHOST=<xs address>] [DBMSHOST=<dbms address>] [DBMSPORT=<port number>] [PAUSE=yes] [DELETE=no]"
+	@echo "       RUNNER            chooses between the J2SE (main) or Java Card 3 (http) runner"
+	@echo "       XSHOST            host name or address of the Java Card 3 server"
+	@echo "       DBMSHOST          host name or address of DBMS server (localhost if local)"
+	@echo "       DBMSPORT          port number of DBMS server (defaults to 33000)"
+	@echo "       PAUSE=yes         Wait for key input between each test"
+	@echo "       DELETE=no         Do not delete temporary files (in directory tmp/)"
+	@echo "       STOPONERROR=no    Stop immediately when one test fails (for make testall)"
+	@echo "       TT=TEST_1         Name of a tearing test to run for target xs-tearing (from org.inria.dmsp.test.* only)"
+	@echo
+	@echo "Common targets:"
+	@echo "  help              - Print this help"
+	@echo "  clean             - Clean directories classes/ and tmp/"
+	@echo "  classes           - Just create directory classes/"
+	@echo "  list              - List all available tests"
+	@echo "  ignored           - List all ignored tests"
+	@echo
+	@echo "PC targets:"
+	@echo "  build             - Compile everything for PC platform (make sure JAVA_HOME and ANT_HOME are set correctly)"
+	@echo "  all               - Run all the tests located in src/jdbc-tests"
+	@echo "  testall           - Run all the tests listed in file tests.lst"
+	@echo "  test TEST=<test name>  - Run given test (ex: TEST=test.jdbc.INRIA_1.Test)"
+	@echo
+	@echo "XS targets:"
+	@echo "  compile           - Compile everything for embedded platform"
+	@echo "  librom            - Make ROM image library"
+	@echo "  rom               - Make ROM image"
+	@echo "  xstestall         - Run all the tests listed in file tests.lst in embedded environment"
+	@echo "  xstestall-tearing - Run all the tearing tests listed in file tests-tearing.lst in embedded environment"
+	@echo "  xs-tearing        - Run tearing test defined by variable TT in embedded environment"
+
+clean:
+	@rm -rf $(TMPOUTPUTS) classes
+
+classes:
+	@mkdir classes
+
+list:
+	@echo "Available tests:"
+	@for t in $(TESTS) ; \
+	do \
+		echo "   - "$$t ; \
+	done
+
+ignored:
+	@echo "Ignored tests:"
+	@for t in $(IGNORED_TESTS) ; \
+	do \
+		echo "   - "$$t ; \
+	done
+
+build: classes clean
+	@ant --noconfig -q -f build_inria.xml build
+	@(cd classes; jar cf ../jdbc.jar *)
+
+all: $(TMPOUTPUTS)
+	@for t in $(TESTS) ; \
+	do \
+		$(MAKE) --no-print-directory test TEST=$$t ; \
+		if [ "x$$PAUSE" = "xyes" ] ; then \
+			read -p '<Hit ENTER for next test>' REPLY ; \
+		fi ; \
+	done
+
+testall: $(TMPOUTPUTS)
+	@for t in $(shell grep -v '^#' tests.lst) ; \
+	do \
+		$(MAKE) --no-print-directory test TEST=$$t.Test ; \
+		$(CHECK_RET_CMD) ; \
+	done
+
+test: $(TMPOUTPUTS)
+ifeq ($(TEST),)
+	$(error Unspecified test, use: TEST=<test class name>)
+else
+	@TESTPKG=`echo $(TEST) | sed s+\.Test++` ; \
+	TESTOUT=`echo $(TEST) | sed -e "s+\.+/+g" | sed s+Test+output$(PARTSUFFIX).txt+` ; \
+	printf "==> $$TESTPKG ..." ; \
+	$(RUNTEST) ; \
+	if [ "$(PART)" != "1" -o -s $(TMPOUTPUTS)/$(TEST)$(PARTSUFFIX).out ] ; \
+	then \
+		cat src/jdbc-tests/$$TESTOUT | $(U2D) > $(TMPOUTPUTS)/out.txt ; \
+		cat $(TMPOUTPUTS)/$(TEST)$(PARTSUFFIX).out | $(U2D) > $(TMPOUTPUTS)/tmp.txt ; \
+		if `diff -pruN $(TMPOUTPUTS)/out.txt $(TMPOUTPUTS)/tmp.txt > $(TMPOUTPUTS)/$(TEST)$(PARTSUFFIX).diff` ; \
+		then \
+			echo "OK" ; \
+		else \
+			echo "KO, mismatch:" ; \
+			echo "-8<-------------------------------------------" ; \
+			cat $(TMPOUTPUTS)/$(TEST)$(PARTSUFFIX).diff ; \
+			echo "------------------------------------------->8-" ; \
+		fi ; \
+		rm $(TMPOUTPUTS)/out.txt $(TMPOUTPUTS)/tmp.txt ; \
+	else \
+		echo OK ; \
+	fi
+ifeq ($(DELETE),yes)
+	@rm $(TMPOUTPUTS)/$(TEST)$(PARTSUFFIX).out $(TMPOUTPUTS)/$(TEST)$(PARTSUFFIX).diff
+endif
+endif
+
+$(TMPOUTPUTS):
+	@mkdir $(TMPOUTPUTS)
+
+compile: classes
+	@javac -Xlint:deprecation -d classes -s src/ $(shell find src -name "*.java" -and -not -name "*ServletRunner.java")
+	@rsync -Cma --exclude '*.java' --exclude="*.txt" --exclude="*.svn" src/jdbc-tests/ classes/
+
+librom:
+	@ant -Dxs.rom.bcoptim=true startpc lib-deploy fsdump romize stoppc
+
+rom:
+	@ant -Dxs.rom.bcoptim=true -Dxs.host="$(XSHOST)" -Dtest.ignore="$(IGNORED_TESTS)" makerom
+
+xstestall: $(TMPOUTPUTS)
+	@for t in $(shell grep -v '^#' tests.lst) ; \
+	do \
+	  $(MAKE) --no-print-directory test DELETE=no RUNNER=http XSHOST=xs.card TEST=$$t.Test ; \
+	done
+
+xstestall-tearing: $(TMPOUTPUTS)
+	@for t in $(shell grep -v '^#' tests-tearing.lst) ; \
+	do \
+	  $(MAKE) --no-print-directory DELETE=no test RUNNER=http XSHOST=xs.card TEST=org.inria.dmsp.test.$$t.Test PART=1 ANTTARGET="test-deploy test-run" ; \
+	  $(MAKE) --no-print-directory DELETE=no test RUNNER=http XSHOST=xs.card TEST=org.inria.dmsp.test.$$t.Test PART=2 ANTTARGET="test-run test-undeploy"; \
+	done
+
+xs-tearing: $(TMPOUTPUTS)
+	-$(MAKE) --no-print-directory DELETE=no test RUNNER=http XSHOST=xs.card TEST=org.inria.dmsp.test.$(TT).Test PART=1 ANTTARGET="test-deploy test-run"
+	-$(MAKE) --no-print-directory DELETE=no test RUNNER=http XSHOST=xs.card TEST=org.inria.dmsp.test.$(TT).Test PART=2 ANTTARGET="test-run test-undeploy"

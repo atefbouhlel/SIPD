@@ -1,0 +1,119 @@
+SRCPATH = src
+OBJPATH = classes
+
+D1 = jdbc-j2se
+D2 = jdbc-core
+D3 = jdbc-tcp
+D4 = jdbc-tests
+
+#
+# Some platform-dependent commands
+#
+MKDIR = mkdir -p
+RMDIR = rm -rf
+RM = rm -f
+CP = cp
+
+JAVAC = javac -g:lines,vars,source -target "1.6" -source "1.6" \
+	-Xbootclasspath/p:$(OBJPATH) -classpath $(OBJPATH) -d $(OBJPATH)
+
+#
+# Gather source files separately to compile and handle dependencies properly
+#
+SRCS1 = $(shell find $(SRCPATH)/$(D1) -name "*.java" -type f -print | xargs -L1 dirname | sort -r | uniq)
+SRCS2 = $(shell find $(SRCPATH)/$(D2) -name "*.java" -type f -print | xargs -L1 dirname | sort -r | uniq)
+SRCS3 = $(shell find $(SRCPATH)/$(D3) -name "*.java" -type f -print | xargs -L1 dirname | sort -r | uniq)
+SRCS4 = $(shell find $(SRCPATH)/$(D4) -name "*.java" -type f -print | xargs -L1 dirname | sort -r | uniq)
+
+#
+# Gather other files separately to copy them properly
+#
+BINS1 = $(patsubst $(SRCPATH)/$(D1)%, %, $(shell find $(SRCPATH)/$(D1) -not -name "*.java" -not -name "*.txt" -not -name "*.xml" -type f -print | grep -v ".svn"))
+BINS2 = $(patsubst $(SRCPATH)/$(D2)%, %, $(shell find $(SRCPATH)/$(D2) -not -name "*.java" -not -name "*.txt" -not -name "*.xml" -type f -print | grep -v ".svn"))
+BINS3 = $(patsubst $(SRCPATH)/$(D3)%, %, $(shell find $(SRCPATH)/$(D3) -not -name "*.java" -not -name "*.txt" -not -name "*.xml" -type f -print | grep -v ".svn"))
+BINS4 = $(patsubst $(SRCPATH)/$(D4)%, %, $(shell find $(SRCPATH)/$(D4) -not -name "*.java" -not -name "*.txt" -not -name "*.xml" -type f -print | grep -v ".svn"))
+BINS = $(dir $(BINS1) $(BINS2) $(BINS3) $(BINS4))
+
+#
+# Targets
+#
+
+.PHONY:			classes src tearing_tests
+.DEFAULT:		jar
+
+jar: build
+	@printf "	Package JAR..."
+	@(cd $(OBJPATH); jar cf ../jdbc.jar *)
+	@echo "DONE"
+
+clean:
+	@printf "	Cleaning intermediate directories..."
+	@$(RMDIR) $(OBJPATH)
+	@echo "DONE"
+
+cleanall: clean
+	@$(RM) jdbc.jar
+
+init:
+	@printf "	Creating intermediate directories"
+	@for b in $(BINS) ; \
+	do \
+		$(MKDIR) $(OBJPATH)$$b ; \
+		printf "." ; \
+	done
+	@echo "DONE"
+	@printf "	Copying [ $(D1) ]..."
+	@for b in $(BINS1) ; \
+	do \
+		$(CP) $(SRCPATH)/$(D1)$$b $(OBJPATH)$$b ; \
+	done
+	@printf "[ $(D2) ]..."
+	@for b in $(BINS2) ; \
+	do \
+		$(CP) $(SRCPATH)/$(D2)$$b $(OBJPATH)$$b ; \
+	done
+	@printf "[ $(D3) ]..."
+	@for b in $(BINS3) ; \
+	do \
+		$(CP) $(SRCPATH)/$(D3)$$b $(OBJPATH)$$b ; \
+	done
+	@printf "[ $(D4) ]..."
+	@for b in $(BINS4) ; \
+	do \
+		$(CP) $(SRCPATH)/$(D4)$$b $(OBJPATH)$$b ; \
+	done
+	@echo "DONE"
+
+build: init
+	@printf "	Compile [ $(D1) ]"
+	@for j in $(SRCS1) ; \
+	do \
+		$(JAVAC) -sourcepath $(SRCPATH)/$(D1) $$j/*.java ; \
+		printf "." ; \
+	done
+	@echo "DONE"
+	@printf "	Compile [ $(D2) ]"
+	@for j in $(SRCS2) ; \
+	do \
+		$(JAVAC) -sourcepath $(SRCPATH)/$(D2) $$j/*.java ; \
+		printf "." ; \
+	done
+	@echo "DONE"
+	@printf "	Compile [ $(D3) ]"
+	@for j in $(SRCS3) ; \
+	do \
+		$(JAVAC) -sourcepath $(SRCPATH)/$(D3) $$j/*.java ; \
+		printf "." ; \
+	done
+	@echo "DONE"
+	@printf "	Compile [ $(D4) ]"
+	@$(CP) $(SRCPATH)/$(D4)/test/runner/ServletRunner.java .
+	@$(RM) $(SRCPATH)/$(D4)/test/runner/ServletRunner.java
+	@for j in $(SRCS4) ; \
+	do \
+		$(JAVAC) -sourcepath $(SRCPATH)/$(D4) $$j/*.java ; \
+		printf "." ; \
+	done
+	@$(CP) ServletRunner.java $(SRCPATH)/$(D4)/test/runner
+	@$(RM) ServletRunner.java
+	@echo "DONE"

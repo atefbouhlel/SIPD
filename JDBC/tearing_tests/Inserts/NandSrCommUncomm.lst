@@ -1,0 +1,10 @@
+# This file contains the of list of IDs of the tearing points that occur during the recovery.
+  
+# Recover_TableSKT: 
+91  
+93  
+94 
+
+# Recover_NANDBlockLinks: 
+101 
+102 	

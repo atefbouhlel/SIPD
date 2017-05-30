@@ -1,0 +1,20 @@
+## 2-pass Delete tests
+#
+# Note:
+#	Do not launch the NandBkEmpty* tests because it takes too much
+#	time to erase more than NB_MAX_UPDATE_DELETE (=1536) tuples.
+
+NorEmpty
+#NorAllUncomm
+#NorCommUncomm
+#NorLastBeforeFlush
+#NorLastAfterFlush
+
+NandSrAllUncomm
+NandSrCommUncomm
+#NandPgEmpty
+
+#NandBkEmptyBeforeLkUpd
+#NandBkEmptyAfterLkUpd
+#NandBkNonEmpty
+

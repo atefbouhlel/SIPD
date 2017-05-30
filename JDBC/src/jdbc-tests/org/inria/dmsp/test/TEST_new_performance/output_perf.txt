@@ -1,0 +1,275 @@
+Initializing DBMS... 
+Done. 
+Connecting to DB: dbHost
+Done
+Loading schema... 
+Schema loaded, size: 2894
+Generating data...
+// Insertion dans la table USERDMSP 
+Save DBMS
+Closing DB connection... Done.
+Initializing DBMS... 
+Done. 
+Connecting to DB: dbHost
+Done
+Loading Delta.
+// Insertion dans la table USERDMSP 
+// Insertion dans la table USERDMSP 
+// Insertion dans la table ROLE 
+// Insertion dans la table HABILITATION 
+// Insertion dans la table FORMULAIRE 
+// Insertion dans la table EPISODE 
+// Insertion dans la table EVENT 
+// Insertion dans la table COMMENT 
+// Insertion dans la table INFO 
+// Skip la table MATRICE_DMSP 
+// Insertion dans la table MATRICE_PATIENT 
+Save DBMS
+Closing DB connection... Done.
+Initializing DBMS... 
+Done. 
+Connecting to DB: dbHost
+Done
+Generating data...
+// Insertion dans la table USERDMSP 
+Save DBMS
+Closing DB connection... Done.
+Initializing DBMS... 
+Done. 
+Connecting to DB: dbHost?user=1022&role=1018
+Access Granted for UserDMSP = 1022 with the Role = 1018
+Done
+========== Q8 ==========
+// Insertion in table EVENT
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table INFO
+0 tuple inserted...
+// Insertion in table COMMENT
+0 tuple inserted...
+Save DBMS
+SELECT INSERTED FORM (GIR Medical):
+Row	IdGlobal	Position	ValChar	ValDate	ValNum	ValComment	DateFin	
+1	1694498818	0	char value	2000-10-20	0	NULL	2000-10-20
+2	1694498819	1	char value	2000-10-20	0	NULL	2000-10-20
+3	1694498820	2	char value	2000-10-20	0	NULL	2000-10-20
+4	1694498821	3	char value	2000-10-20	0	NULL	2000-10-20
+5	1694498822	4	char value	2000-10-20	0	NULL	2000-10-20
+6	1694498823	5	char value	2000-10-20	0	NULL	2000-10-20
+7	1694498824	6	char value	2000-10-20	0	NULL	2000-10-20
+8	1694498825	7	char value	2000-10-20	0	NULL	2000-10-20
+9	1694498826	8	char value	2000-10-20	0	NULL	2000-10-20
+10	1694498827	9	char value	2000-10-20	0	NULL	2000-10-20
+11	1694498828	10	char value	2000-10-20	0	NULL	2000-10-20
+12	1694498829	11	char value	2000-10-20	0	NULL	2000-10-20
+13	1694498830	12	char value	2000-10-20	0	NULL	2000-10-20
+14	1694498831	13	char value	2000-10-20	0	NULL	2000-10-20
+15	1694498832	14	char value	2000-10-20	0	NULL	2000-10-20
+16	1694498833	15	char value	2000-10-20	0	NULL	2000-10-20
+17	1694498834	16	char value	2000-10-20	0	NULL	2000-10-20
+18	1694498835	17	char value	2000-10-20	0	NULL	2000-10-20
+19	1694498836	18	char value	2000-10-20	0	NULL	2000-10-20
+20	1694498837	19	char value	2000-10-20	0	NULL	2000-10-20
+21	1694498838	20	char value	2000-10-20	0	NULL	2000-10-20
+22	1694498839	21	char value	2000-10-20	0	NULL	2000-10-20
+23	1694498840	22	char value	2000-10-20	0	NULL	2000-10-20
+24	1694498841	23	char value	2000-10-20	0	NULL	2000-10-20
+25	1694498842	24	char value	2000-10-20	0	NULL	2000-10-20
+26	1694498843	25	char value	2000-10-20	0	NULL	2000-10-20
+27	1694498844	26	char value	2000-10-20	0	NULL	2000-10-20
+28	1694498845	27	char value	2000-10-20	0	NULL	2000-10-20
+29	1694498846	28	char value	2000-10-20	0	NULL	2000-10-20
+30	1694498847	29	char value	2000-10-20	0	NULL	2000-10-20
+31	1694498848	30	char value	2000-10-20	0	NULL	2000-10-20
+32	1694498849	31	char value	2000-10-20	0	NULL	2000-10-20
+33	1694498850	32	char value	2000-10-20	0	NULL	2000-10-20
+34	1694498851	33	char value	2000-10-20	0	NULL	2000-10-20
+35	1694498852	34	char value	2000-10-20	0	NULL	2000-10-20
+36	1694498853	35	char value	2000-10-20	0	NULL	2000-10-20
+37	1694498854	36	char value	2000-10-20	0	NULL	2000-10-20
+38	1694498855	37	char value	2000-10-20	0	NULL	2000-10-20
+39	1694498856	38	char value	2000-10-20	0	NULL	2000-10-20
+40	1694498857	39	char value	2000-10-20	0	NULL	2000-10-20
+41	1694498858	40	char value	2000-10-20	0	NULL	2000-10-20
+42	1694498859	41	char value	2000-10-20	0	NULL	2000-10-20
+43	1694498860	42	char value	2000-10-20	0	NULL	2000-10-20
+44	1694498861	43	char value	2000-10-20	0	NULL	2000-10-20
+45	1694498862	44	char value	2000-10-20	0	NULL	2000-10-20
+46	1694498863	45	char value	2000-10-20	0	NULL	2000-10-20
+47	1694498864	46	char value	2000-10-20	0	NULL	2000-10-20
+48	1694498865	47	char value	2000-10-20	0	NULL	2000-10-20
+49	1694498866	48	char value	2000-10-20	0	NULL	2000-10-20
+50	1694498867	49	char value	2000-10-20	0	NULL	2000-10-20
+51	1694498868	50	char value	2000-10-20	0	NULL	2000-10-20
+52	1694498869	51	char value	2000-10-20	0	NULL	2000-10-20
+53	1694498870	52	char value	2000-10-20	0	NULL	2000-10-20
+54	1694498871	53	char value	2000-10-20	0	NULL	2000-10-20
+55	1694498872	54	char value	2000-10-20	0	NULL	2000-10-20
+56	1694498873	55	char value	2000-10-20	0	NULL	2000-10-20
+57	1694498874	56	char value	2000-10-20	0	NULL	2000-10-20
+58	1694498875	57	char value	2000-10-20	0	NULL	2000-10-20
+59	1694498876	58	char value	2000-10-20	0	NULL	2000-10-20
+60	1694498877	59	char value	2000-10-20	0	NULL	2000-10-20
+61	1694498878	60	char value	2000-10-20	0	NULL	2000-10-20
+62	1694498879	61	char value	2000-10-20	0	NULL	2000-10-20
+63	1694498880	62	char value	2000-10-20	0	NULL	2000-10-20
+64	1694498881	63	char value	2000-10-20	0	NULL	2000-10-20
+65	1694498882	64	char value	2000-10-20	0	NULL	2000-10-20
+66	1694498883	65	char value	2000-10-20	0	NULL	2000-10-20
+67	1694498884	66	char value	2000-10-20	0	NULL	2000-10-20
+68	1694498885	67	char value	2000-10-20	0	NULL	2000-10-20
+69	1694498886	68	char value	2000-10-20	0	NULL	2000-10-20
+70	1694498887	69	char value	2000-10-20	0	NULL	2000-10-20
+71	1694498888	70	char value	2000-10-20	0	NULL	2000-10-20
+72	1694498889	71	char value	2000-10-20	0	NULL	2000-10-20
+73	1694498890	72	char value	2000-10-20	0	NULL	2000-10-20
+reach EndOfFile
+
+Closing DB connection... Done.
+Connecting to DB: dbHost
+Done
+Desinstall the MetaData of the DBMS embedded in the card
+Closing DB connection... Done.

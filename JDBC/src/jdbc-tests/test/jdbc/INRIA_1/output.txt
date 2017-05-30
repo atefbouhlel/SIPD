@@ -1,0 +1,8 @@
+Initializing DBMS... 
+Done. 
+Connecting to DB: dbHost
+Done
+Loading schema... 
+Schema loaded, size: 2750
+Desinstall the MetaData of the DBMS embedded in the card
+Closing DB connection... Done.
